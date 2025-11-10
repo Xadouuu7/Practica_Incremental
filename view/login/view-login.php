@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login - Gamelog</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
@@ -13,13 +13,13 @@
                 <div class="flex items-center">
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="#" class="text-gray-900 px-3 py-2 rounded-md text-sm font-medium" aria-current="page">
+                            <a href="view-login.php" class="text-gray-900 px-3 py-2 rounded-md text-sm font-medium" aria-current="page">
                                 Login
                             </a>
-                            <a href="view-register.html" class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                            <a href="view-register.php" class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                                 Register
                             </a>
-                            <a href="../juego/view-juego.html" class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                            <a href="../juego/view-juego.php" class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                                 Juegos
                             </a>
                         </div>
@@ -29,6 +29,9 @@
     </nav>
 
     <form action="../../controller/login/controller-login.php" method="post" accept-charset="UTF-8" class="max-w-sm mx-auto">
+        <div class="mb-5">
+            <h1 class="block mb-2 text-2xl font-bold text-gray-900 light:text-black">Iniciar Sesión</h1>
+        </div>
         <div class="mb-5">
             <label for="usuario" class="block mb-2 text-sm font-medium text-gray-900 light:text-black">Usuario</label>
             <input type="text" id="usuario" name="usuario" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-blue-500 light:focus:border-blue-500" placeholder="Usuario" required  />

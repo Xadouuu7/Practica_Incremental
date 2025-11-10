@@ -30,25 +30,41 @@ class Usuario extends database {
      */
     public function autenticarUsuario(string $usuario, string $contraseña): array|Exception {
         try {
-
-            if (empty($usuario) || empty($contraseña)) {
+            if ($usuario === '' || $contraseña === '') {
                 throw new Exception("Los parámetros usuario o contraseña están vacíos.");
             }
-
-
-            $statement = $this->conn->prepare("SELECT * FROM usuario WHERE usuario = ? AND contraseña = ? LIMIT 1");
-            $statement->execute([$usuario, $contraseña]);
-
+            $statement = $this->conn->prepare("SELECT * FROM usuario WHERE usuario = ? LIMIT 1");
+            $statement->execute([$usuario]);
             $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-            if ($result /*&& password_verify(password: $password, hash: $result['password'])*/) {
+            if ($result && isset($result['contraseña']) && password_verify($contraseña, (string)$result['contraseña'])) {
                 return $result;
             }
 
             throw new Exception("Usuario o contraseña incorrectos");
         } catch (Exception $e) {
-            // Mostrar el mensaje de error para depuración
             throw new Exception("Error en la autenticación: " . $e->getMessage());
+        }
+    }
+
+    public function registrarUsuario(string $usuario, string $nombre, string $apellidos, string $correo, string $contraseña, string $verificarContraseña): bool {
+        try {
+            if (empty($usuario) || empty($nombre) || empty($apellidos) || empty($correo) || empty($contraseña) || empty($verificarContraseña)) {
+                throw new Exception("Los parámetros usuario, nombre, apellidos, correo o contraseña están vacíos.");
+            }
+
+            if ($contraseña !== $verificarContraseña) {
+                throw new Exception("Las contraseñas no coinciden.");
+            }
+
+            $hashedContraseña = password_hash($contraseña, PASSWORD_DEFAULT);
+            
+            $statement = $this->conn->prepare("INSERT INTO usuario (usuario, nombre, apellidos, correo, contraseña) VALUES (?, ?, ?, ?, ?)");
+            $result = $statement->execute([$usuario, $nombre, $apellidos, $correo, $hashedContraseña]);
+
+            return $result;
+        } catch (Exception $e) {
+            throw new Exception("Error en el registro: " . $e->getMessage());
         }
     }
 }

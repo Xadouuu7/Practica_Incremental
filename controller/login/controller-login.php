@@ -15,19 +15,16 @@ try {
     $usuario = $_POST['usuario'] ?? '';
     $contraseña = $_POST['contraseña'] ?? '';
 
+
     $usuariopdo = new Usuario();
     $result = $usuariopdo->autenticarUsuario($usuario, $contraseña);
-
-    if ($result) {
-        $_SESSION['user'] = $result;
-        header('Location: ../../view/juego/view-juego.php');
-        exit;
-    } 
-
-    throw new Exception("Usuario o contraseña incorrectos");
+    $_SESSION['user'] = $result;
+    header('Location: ../../view/juego/view-juego.php');
+    exit;
 } catch (Exception $e) {
-    // Mostrar el mensaje de error para depuración
-    echo $e->getMessage();
+    $_SESSION['login_error'] = $e->getMessage();
+    $_SESSION['last_user'] = $usuario ?? '';
+    header('Location: ../../view/login/view-login.php');
 }
 
 
