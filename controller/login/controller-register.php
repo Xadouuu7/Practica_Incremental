@@ -50,6 +50,7 @@ try {
 
     if ($result) {
         unset($_SESSION['register_error']);
+        unset($_SESSION['ultimo_usuario']);
         header('Location: ../../view/login/view-login.php');
         exit;
     } else {
@@ -57,6 +58,9 @@ try {
     }
 } catch (Exception $e) {
     $_SESSION['register_error'] = $errores;
+
+    $_SESSION['ultimos_datos'] = $_POST;
+
     header('Location: ../../view/login/view-register.php');
     exit;
 }

@@ -7,9 +7,13 @@
 </head>
 <body>
     <h1>Bienvenido al juego</h1>
-    <?php session_start(); 
+    <?php
+        session_start(); 
+        require "../../controller/middleware/check-auth.php";
+        require_login(true);
         if (isset($_SESSION['user'])) {
             echo "<p>Usuario: " . htmlspecialchars($_SESSION['user']['usuario']) . "</p>";
+            
         } else {
             echo "<p>No hay usuario autenticado.</p>";
         }
